@@ -1,0 +1,26 @@
+{
+  "development": {
+    "username": "user",
+    "password": "user",
+    "database": "senscritique",
+    "host": "db",
+    "dialect": "mariadb",
+    "migrationStorageTableName": "migrations"
+  },
+  "test": {
+    "username": "user",
+    "password": "user",
+    "database": "senscritique_test",
+    "host": "db",
+    "dialect": "mariadb",
+    "migrationStorageTableName": "migrations"
+  },
+  "production": {
+    "username": "user",
+    "password": "user",
+    "database": "senscritique_production",
+    "host": "db",
+    "dialect": "mariadb",
+    "migrationStorageTableName": "migrations"
+  }
+}
