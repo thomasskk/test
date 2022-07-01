@@ -4,7 +4,7 @@ install:
 	$(MAKE) migrate
 	$(MAKE) restart
 start:
-	docker-compose up -d
+	docker-compose up -d --force-recreate
 stop:
 	docker-compose down
 restart:
