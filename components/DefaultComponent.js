@@ -136,7 +136,7 @@ export const DefaultComponent = () => {
         <div className="flex items-center justify-center gap-5">
           <button
             className="bg-gray-800 text-white font-bold py-2 px-4"
-            onClick={() => setPage(page + 1)}
+            onClick={() => setPage(page - 1)}
             disabled={page === 1}
           >
             précédent
