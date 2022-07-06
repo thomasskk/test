@@ -2,6 +2,7 @@ import requests as r
 import mariadb
 import json
 import os, sys
+import lxml.html
 
 """
 Fonction permettant de récupérer l'URL SensCritique d'un animé
@@ -39,8 +40,30 @@ def connect_to_database():
         print(f"Error connecting to MariaDB Platform: {e}")
         sys.exit(1)
 
-
 """
 Ajouter votre logique en dessous ⬇️
 """
-print("Hello world ! 👋🏻")
+
+def main():
+    connection = connect_to_database()
+    cursor = connection.cursor()
+    cursor.execute("SELECT title FROM animes")
+    animes_title_data = cursor.fetchall()
+
+    for (anime_data) in animes_title_data:
+        title = anime_data[0]
+        url = get_sc_anime_url(title)
+        if url is not None:
+            html = r.get(url)
+            doc = lxml.html.fromstring(html.content)
+            rating = doc.xpath('//*[@id="__next"]/div[1]/div/main[1]/div/div[3]/div/div/div[2]/div/div[2]/div[3]/div[1]/div/text()')[0]
+            cursor.execute(f"UPDATE animes SET rating = %s WHERE title = %s", (float(rating), title))
+            connection.commit()
+            print(f"{title} ajouté à la base de données")
+        else:
+            print(f"{title} n'a pas été trouvé sur SensCritique")
+    connection.close()
+    print("Done")
+   
+if __name__ == "__main__":
+    main()
